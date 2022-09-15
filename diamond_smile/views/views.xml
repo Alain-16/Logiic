@@ -1,0 +1,71 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="diamond_smile.list">
+      <field name="name">DiamondSmile list</field>
+      <field name="model">diamond_smile.diamond_smile</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="doctor_id"/>
+          <field name="service"/>
+          <field name="duration"/>
+          <field name="app_date"/>
+          <field name="patient_first_name"/>
+          <field name="patient_last_name"/>
+          <field name="Gender"/>
+          <field name="phone"/>
+          <field name="email"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="diamond_smile.action_window">
+      <field name="name">DiamondSmile </field>
+      <field name="res_model">diamond_smile.diamond_smile</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Book your appointment!
+        </p>
+      </field>
+    </record>
+
+
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.server" id="diamond_smile.action_server">
+      <field name="name">DiamondSmile server</field>
+      <field name="model_id" ref="model_diamond_smile_diamond_smile"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="DiamondSmile" id="diamond_smile.menu_root" sequence="2"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="appointment" id="diamond_smile.menu_1" parent="diamond_smile.menu_root"/>
+    <menuitem name="configuration" id="diamond_smile.menu_2" parent="diamond_smile.menu_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="Book appointment" id="diamond_smile.menu_1_list" parent="diamond_smile.menu_1"
+              action="diamond_smile.action_window"/>
+    <menuitem name="Settings" id="diamond_smile" parent="diamond_smile.menu_2"
+              action="diamond_smile.action_server"/>
+
+  </data>
+</odoo>
